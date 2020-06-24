@@ -1,0 +1,48 @@
+body, html {
+  height: 100%;
+}
+/* Split the screen in half */
+.split {
+  height: 10000%;
+  width: 50%;
+  position: fixed;
+  top: 15%;
+  overflow: auto;
+  overflow-y: scroll; 
+  padding-top: 20px;
+  padding-bottom: 100px;
+}
+
+/* Control the left side */
+.left {
+  left: 0;
+  height: 100%;
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+  height: 100%;
+  padding-bottom: 100px;
+}
+
+
+.html2canvas-container { width: 100% !important; height: 200% !important; overflow: auto;}
+
+.container-main{
+  max-width:50%;  
+  width:50%; 
+  float:left;
+   height:100vh; 
+   overflow-x: 
+   scroll;
+   overflow-y: scroll; 
+   background:#EFF0F1;
+    overflow:scroll;
+  }
+
+
+  #box {
+    height: 500px;
+    overflow: auto;
+  }

@@ -1,0 +1,100 @@
+<div class="container">
+  <div>
+    <h1>Model Devlopment to predict release time and reliablity of a software</h1>
+  </div>
+  <div class="split left">
+
+    <div class="form-group mt-3">
+      <h2>Collect Software Testing Failure Data</h2>
+      <label class="mr-2">Upload your file:</label>
+      <input type="file" class="form-control" (change)="addfile($event)" placeholder="Upload file"
+        accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+      <br>
+      <button type="submit" class="btn btn-primary" (click)="uploadDocument()">Submit</button>
+      <p *ngIf=(testingError)> File Uploaded </p>
+    </div>
+
+    <hr>
+    <div *ngIf=(testingError)> 
+      <h2 >Use Software Reliability Model to Calculate Current Reliability</h2>
+      <h3> Model Used: Goel-Okumoto model </h3>
+      <p>Optimised Values of a & b are stored in Local result folder in excel format</p>
+      <button  (click)=getEmployee()> Parameter Estimation using Simmulated Annealing </button>
+    </div>
+
+    <div *ngIf=(this.parameter)>
+      <hr>
+      <h2> Error Function of Goel-Okumoto Model to Calculate Faults Removed</h2>
+      <button (click)=errorFunctionGraph()> Faults Removed Graph</button>
+    </div>
+
+    <div *ngIf="prediction">
+      <hr>
+      <h2>Predict Software reliability at any stage of its life cycle</h2>
+      Select Any Week To predict Its Reliablity: <select [(ngModel)]="selectedWeek">
+        <option *ngFor="let data of filelist" [value]="data.W">
+          {{data.W}}
+        </option>
+      </select>
+      <br>
+      <button (click)=getPredParameter()> Parameter Estimation using Simmulated Annealing </button>
+    </div>
+
+    <div *ngIf="newparameter">
+      <hr>
+      <h2>Cost Optimization </h2>
+      Enter Testing Cost: <input type="number" [(ngModel)]="cost.testing"><br>
+      Enter Operational and Maintaince Cost: <input type="number" [(ngModel)]="cost.operational"><br>
+      Enter PerUnitTesting Cost: <input type="number" [(ngModel)]="cost.unitTesting"><br>
+      <button (click)="estimate_cost()">Cal. Estimate cost</button><br>
+    </div>
+    <div>
+      <hr>
+      <h2>Calculate Release Time</h2>
+      <button (click) = "predict_release_time()">Calculate</button>
+    </div>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+  </div>
+
+  <div class="split right">
+    <div>
+      <div>
+        <hr>
+        <canvas id="canvas" class="html2canvas-container">{{ chart }}</canvas>
+      </div>
+
+      <div *ngIf="parameter">
+        <hr>
+        Total amount of faults  in the program : a = {{parameter[0]}}
+        <br>
+        The rate at which the failure rate is being removed: b = {{parameter[1]}}
+        <br>
+        Reliability: R0 = {{reliability}}
+      </div>
+      <div>
+        <hr>
+        <canvas id="mt" class="html2canvas-container">{{ chart }}</canvas>
+      </div>
+      <div *ngIf="newreliability">
+        <hr>
+        Total amount of faults  in the program : a = {{newparameter[0]}}
+        <br>
+        The rate at which the failure rate is being removed: b = {{newparameter[1]}}
+        <br>
+        Reliability: R0 = {{newreliability}}
+      </div>
+      <div *ngIf="cost.estimated_cost!=0">
+        <hr>
+        Estimated_Cost : {{cost.estimated_cost}}
+      </div>
+      <div *ngIf="releaseTime">
+        <hr>
+        <canvas id="pred_Weeks">{{ predchart }}</canvas>
+        <strong>Release Time Calculated is : {{releaseTime}} Weeks</strong>
+      </div>
+      <br><br><br><br><br><br><br>
+      <br><br><br><br><br><br><br>
+    </div>
+  </div>
+</div>
